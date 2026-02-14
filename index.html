@@ -127,11 +127,15 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-// YES button
+// YES button action
 function sayYes() {
 
     // Play music
-    document.getElementById("bgMusic").play();
+    const music = document.getElementById("bgMusic");
+    music.play().catch(err => console.log("Playback blocked:", err));
+
+    // Alert popup
+    alert("Pooja ❤️\n\nThank you for being with me always.\nI need you always and forever.\nDon’t ever go to anyone else.\nBe my hendthi always 💍\nBe mine ❤️");
 
     // Change screen
     document.body.innerHTML = `
@@ -159,10 +163,6 @@ function sayYes() {
 
             <p style="font-size:18px; margin-top:10px;">
                 I need you always and forever.
-            </p>
-
-            <p style="font-size:18px; margin-top:10px;">
-                Don’t ever go to anyone else.
             </p>
 
             <p style="font-size:20px; margin-top:15px; font-weight:bold;">
