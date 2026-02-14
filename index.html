@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Valentine's Day ❤️</title>
+<title>Happy Valentine's Day Pooja ❤️</title>
 
 <style>
 body {
@@ -25,7 +25,7 @@ body {
 }
 
 .container {
-    padding: 40px 20px;
+    padding: 50px 20px;
 }
 
 h1 {
@@ -79,20 +79,6 @@ button {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-110vh); opacity: 0; }
 }
-
-/* Fireworks */
-.firework {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    animation: explode 1s ease-out forwards;
-}
-
-@keyframes explode {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(8); opacity: 0; }
-}
 </style>
 </head>
 
@@ -109,8 +95,8 @@ button {
 
 <script>
 
-// Typing message
-const text = "My Love,\n\nSince you came into my life,\neverything feels brighter.\nYou are my calm, my happiness,\nand my forever ❤️\n\nWill you always be mine?";
+// Typing love message
+const text = "Pooja ❤️,\n\nSince you came into my life,\neverything feels magical.\nYou are my calm, my happiness,\nand my forever.\n\nWill you always be mine?";
 let i = 0;
 const speed = 40;
 
@@ -136,29 +122,70 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-// Fireworks
-function createFirework(x, y) {
-    for (let j = 0; j < 20; j++) {
-        const firework = document.createElement("div");
-        firework.classList.add("firework");
-        firework.style.left = x + "px";
-        firework.style.top = y + "px";
-        firework.style.background = `hsl(${Math.random()*360},100%,50%)`;
-        document.body.appendChild(firework);
-        setTimeout(() => firework.remove(), 1000);
+// YES button glorification
+function sayYes() {
+    document.body.innerHTML = `
+        <div style="
+            height:100vh;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            background: radial-gradient(circle, #ff4d6d, #ff758c);
+            color:white;
+            text-align:center;
+        ">
+            <h1 style="
+                font-size:42px;
+                animation: glowText 1.5s infinite alternate;
+            ">
+                I LOVE YOU POOJA ❤️
+            </h1>
+
+            <p style="font-size:20px; margin-top:20px;">
+                You are the most beautiful soul in my world.
+            </p>
+
+            <p style="font-size:18px; margin-top:10px;">
+                Today. Tomorrow. Forever.
+            </p>
+        </div>
+
+        <style>
+        @keyframes glowText {
+            from { text-shadow:0 0 10px white; }
+            to { text-shadow:0 0 30px yellow; }
+        }
+        </style>
+    `;
+
+    launchConfetti();
+}
+
+// Confetti effect
+function launchConfetti() {
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement("div");
+        confetti.style.position = "fixed";
+        confetti.style.width = "8px";
+        confetti.style.height = "8px";
+        confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.top = Math.random() * window.innerHeight + "px";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.opacity = 0.8;
+        confetti.style.transition = "transform 2s ease, opacity 2s ease";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+            confetti.style.transform = "scale(3)";
+            confetti.style.opacity = "0";
+        }, 50);
+
+        setTimeout(() => confetti.remove(), 2000);
     }
 }
 
-document.addEventListener("click", function(e){
-    createFirework(e.clientX, e.clientY);
-});
-
-// YES button
-function sayYes() {
-    alert("You just made me the happiest man alive ❤️");
-}
-
-// NO button moves (works on mobile tap also)
+// NO button runs away
 const noBtn = document.getElementById("noBtn");
 
 function moveNoButton() {
@@ -176,4 +203,3 @@ noBtn.addEventListener("click", moveNoButton);
 
 </body>
 </html>
-
