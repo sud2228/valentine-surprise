@@ -93,10 +93,15 @@ button {
     </div>
 </div>
 
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
 // Typing message
-const text = "Pooja ❤️,\n\nYou make my life beautiful.\nYou are my peace, my strength,\nand my biggest happiness.\n\nWill you always be mine?";
+const text = "Pooja ❤️,\n\nThank you for being with me always.\nYou are my happiness, my strength,\nand my forever.\n\nWill you always be mine?";
 let i = 0;
 const speed = 40;
 
@@ -122,8 +127,13 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-// YES button glorification
+// YES button
 function sayYes() {
+
+    // Play music
+    document.getElementById("bgMusic").play();
+
+    // Change screen
     document.body.innerHTML = `
         <div style="
             height:100vh;
@@ -175,7 +185,7 @@ function sayYes() {
     launchConfetti();
 }
 
-// Confetti effect
+// Confetti
 function launchConfetti() {
     for (let i = 0; i < 180; i++) {
         const confetti = document.createElement("div");
@@ -198,7 +208,7 @@ function launchConfetti() {
     }
 }
 
-// NO button runs away
+// NO button runs
 const noBtn = document.getElementById("noBtn");
 
 function moveNoButton() {
