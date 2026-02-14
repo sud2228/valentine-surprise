@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ff4d6d, #ff85a2);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: white;
+    text-align: center;
+}
+
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-shadow: 0 0 15px white;
+}
+
+#message {
+    font-size: 1.2em;
+    min-height: 130px;
+    margin-top: 20px;
+    line-height: 1.6em;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 30px;
+    margin: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background: white;
+    color: #ff4d6d;
+}
+
+#yesBtn:hover {
+    background: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background: #222;
+    color: white;
+    position: absolute;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 18px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Fireworks */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(8); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Happy Valentine's Day Pooja ❤️</h1>
+    <div id="message"></div>
+    <div>
+        <button id="yesBtn" onclick="sayYes()">YES 💕</button>
+        <button id="noBtn">NO 😜</button>
+    </div>
+</div>
+
+<!-- Optional Background Music -->
+<audio autoplay loop>
+    <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Typing Message
+const text = "My Love,\n\nSince you came into my life,\neverything feels brighter.\nYou are my calm, my happiness,\nand my forever ❤️\n\nWill you always be mine?";
+let i = 0;
+const speed = 40;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("message").innerHTML += 
+            text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+    }
+}
+typeWriter();
+
+// Floating Hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 300);
+
+// Fireworks
+function createFirework(x, y) {
+    for (let j = 0; j < 20; j++) {
+        const firework = document.createElement("div");
+        firework.classList.add("firework");
+        firework.style.left = x + "px";
+        firework.style.top = y + "px";
+        firework.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 1000);
+    }
+}
+
+document.addEventListener("click", function(e){
+    createFirework(e.clientX, e.clientY);
+});
+
+// YES Button
+function sayYes() {
+    alert("You just made me the happiest man alive ❤️");
+}
+
+// NO Button Runs Away
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", function() {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+</script>
+
+</body>
+</html>
