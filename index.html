@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Love ❤️</title>
+<title>Happy Valentine's Day ❤️</title>
 
 <style>
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
     background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ff4d6d, #ff85a2);
     background-size: 400% 400%;
     animation: gradientBG 12s ease infinite;
-    color: white;
-    text-align: center;
 }
 
 @keyframes gradientBG {
@@ -25,32 +25,28 @@ body {
 }
 
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 500px;
+    padding: 40px 20px;
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 28px;
+    margin-bottom: 20px;
     text-shadow: 0 0 15px white;
 }
 
 #message {
-    font-size: 1.2em;
-    min-height: 130px;
-    margin-top: 20px;
-    line-height: 1.6em;
+    font-size: 18px;
+    min-height: 120px;
+    line-height: 1.6;
+    margin-bottom: 30px;
 }
 
 button {
     padding: 12px 25px;
-    font-size: 1em;
+    font-size: 16px;
     border: none;
     border-radius: 30px;
-    margin: 15px;
+    margin: 10px;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -68,24 +64,25 @@ button {
 #noBtn {
     background: #222;
     color: white;
-    position: absolute;
+    position: relative;
 }
 
 /* Floating hearts */
 .heart {
-    position: absolute;
-    font-size: 18px;
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
     animation: floatUp 6s linear infinite;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(100vh); opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
 
 /* Fireworks */
 .firework {
-    position: absolute;
+    position: fixed;
     width: 6px;
     height: 6px;
     border-radius: 50%;
@@ -102,7 +99,7 @@ button {
 <body>
 
 <div class="container">
-    <h1>Happy Valentine's Day Pooja ❤️</h1>
+    <h1>Happy Valentine's Day HER_NAME ❤️</h1>
     <div id="message"></div>
     <div>
         <button id="yesBtn" onclick="sayYes()">YES 💕</button>
@@ -110,14 +107,9 @@ button {
     </div>
 </div>
 
-<!-- Optional Background Music -->
-<audio autoplay loop>
-    <source src="romantic.mp3" type="audio/mpeg">
-</audio>
-
 <script>
 
-// Typing Message
+// Typing message
 const text = "My Love,\n\nSince you came into my life,\neverything feels brighter.\nYou are my calm, my happiness,\nand my forever ❤️\n\nWill you always be mine?";
 let i = 0;
 const speed = 40;
@@ -132,7 +124,7 @@ function typeWriter() {
 }
 typeWriter();
 
-// Floating Hearts
+// Floating hearts
 function createHeart() {
     const heart = document.createElement("div");
     heart.innerHTML = "❤️";
@@ -142,7 +134,7 @@ function createHeart() {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
 }
-setInterval(createHeart, 300);
+setInterval(createHeart, 400);
 
 // Fireworks
 function createFirework(x, y) {
@@ -161,21 +153,27 @@ document.addEventListener("click", function(e){
     createFirework(e.clientX, e.clientY);
 });
 
-// YES Button
+// YES button
 function sayYes() {
     alert("You just made me the happiest man alive ❤️");
 }
 
-// NO Button Runs Away
+// NO button moves (works on mobile tap also)
 const noBtn = document.getElementById("noBtn");
 
-noBtn.addEventListener("mouseover", function() {
+function moveNoButton() {
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = "fixed";
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
-});
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
 </script>
 
 </body>
 </html>
+
