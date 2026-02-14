@@ -29,7 +29,13 @@ body {
 
 h1 {
     font-size: 30px;
-    margin-bottom: 10px;
+}
+
+#message {
+    font-size: 18px;
+    min-height: 120px;
+    margin-top: 20px;
+    line-height: 1.6;
 }
 
 button {
@@ -64,7 +70,7 @@ button {
     100% { transform: translateY(-110vh); opacity: 0; }
 }
 
-/* Overlay screen */
+/* Overlay */
 .overlay {
     position: fixed;
     top:0;
@@ -97,17 +103,31 @@ button {
 
 <div class="container">
     <h1>Happy Valentine's Day Pooja ❤️</h1>
-    <p>Will you always be mine?</p>
+    <div id="message"></div>
     <button id="yesBtn" onclick="sayYes()">YES 💕</button>
     <button id="noBtn">NO 😜</button>
 </div>
 
-<!-- Background Music -->
 <audio id="bgMusic" preload="auto">
     <source src="romantic.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+
+// ❤️ Typing Effect
+const text = "Pooja ❤️,\n\nThank you for being with me always.\nYou are my happiness, my strength,\nand my forever.\n\nWill you always be mine?";
+let i = 0;
+const speed = 40;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("message").innerHTML += 
+            text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+    }
+}
+typeWriter();
 
 // Floating hearts
 function createHeart() {
@@ -121,18 +141,12 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-// YES button action
+// YES button
 function sayYes() {
 
     const music = document.getElementById("bgMusic");
     music.currentTime = 0;
-    music.volume = 1;
-
-    music.play().then(() => {
-        console.log("Music started");
-    }).catch(err => {
-        console.log("Playback blocked:", err);
-    });
+    music.play().catch(() => {});
 
     alert("You made me the happiest man alive ❤️");
 
@@ -144,10 +158,7 @@ function sayYes() {
             Thank you for being with me always.
         </p>
         <p>I need you always and forever.</p>
-        <p>Don’t ever go to anyone else.</p>
-        <p style="font-size:20px; margin-top:10px; font-weight:bold;">
-            Be my hendthi always 💍
-        </p>
+        <p>Be my hendthi always 💍</p>
         <p style="font-size:22px; margin-top:15px;">
             Be mine. Forever. ❤️
         </p>
