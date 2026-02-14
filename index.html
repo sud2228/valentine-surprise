@@ -11,10 +11,10 @@ body {
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
     color: white;
-    overflow-x: hidden;
     background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ff4d6d, #ff85a2);
     background-size: 400% 400%;
     animation: gradientBG 12s ease infinite;
+    overflow-x: hidden;
 }
 
 @keyframes gradientBG {
@@ -25,17 +25,6 @@ body {
 
 .container {
     padding: 60px 20px;
-}
-
-h1 {
-    font-size: 30px;
-}
-
-#message {
-    font-size: 18px;
-    min-height: 120px;
-    margin-top: 20px;
-    line-height: 1.6;
 }
 
 button {
@@ -57,21 +46,21 @@ button {
     color: white;
 }
 
-/* Floating hearts */
-.heart {
+/* Falling hearts */
+.falling-heart {
     position: fixed;
-    bottom: -20px;
-    font-size: 20px;
-    animation: floatUp 6s linear infinite;
+    top: -20px;
+    font-size: 22px;
+    animation: fall 5s linear infinite;
 }
 
-@keyframes floatUp {
+@keyframes fall {
     0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-110vh); opacity: 0; }
+    100% { transform: translateY(110vh); opacity: 0; }
 }
 
-/* Overlay */
-.overlay {
+/* Love page */
+.love-page {
     position: fixed;
     top:0;
     left:0;
@@ -83,12 +72,19 @@ button {
     justify-content:center;
     align-items:center;
     text-align:center;
-    z-index:999;
     padding:20px;
 }
 
+.love-page img {
+    width: 250px;
+    max-width: 80%;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 30px white;
+}
+
 .glow {
-    font-size:42px;
+    font-size:40px;
     animation: glowText 1.5s infinite alternate;
 }
 
@@ -103,7 +99,7 @@ button {
 
 <div class="container">
     <h1>Happy Valentine's Day Pooja ❤️</h1>
-    <div id="message"></div>
+    <p>Will you always be mine?</p>
     <button id="yesBtn" onclick="sayYes()">YES 💕</button>
     <button id="noBtn">NO 😜</button>
 </div>
@@ -114,73 +110,40 @@ button {
 
 <script>
 
-// ❤️ Typing Effect
-const text = "Pooja ❤️,\n\nThank you for being with me always.\nYou are my happiness, my strength,\nand my forever.\n\nWill you always be mine?";
-let i = 0;
-const speed = 40;
-
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("message").innerHTML += 
-            text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-    }
-}
-typeWriter();
-
-// Floating hearts
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.innerHTML = "❤️";
-    heart.classList.add("heart");
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 400);
-
-// YES button
+// YES Button
 function sayYes() {
 
     const music = document.getElementById("bgMusic");
-    music.currentTime = 0;
     music.play().catch(() => {});
 
     alert("You made me the happiest man alive ❤️");
 
-    const overlay = document.createElement("div");
-    overlay.className = "overlay";
-    overlay.innerHTML = `
+    // Create new love page
+    const page = document.createElement("div");
+    page.className = "love-page";
+    page.innerHTML = `
         <h1 class="glow">I LOVE YOU POOJA ❤️</h1>
-        <p style="font-size:20px; margin-top:20px;">
-            Thank you for being with me always.
-        </p>
-        <p>I need you always and forever.</p>
+        <p style="margin-top:15px;">Thank you for being with me always.</p>
+        <p>I need you forever.</p>
         <p>Be my hendthi always 💍</p>
-        <p style="font-size:22px; margin-top:15px;">
-            Be mine. Forever. ❤️
-        </p>
+        <img src="us.jpg" alt="Our Love">
     `;
-    document.body.appendChild(overlay);
+    document.body.appendChild(page);
 
-    launchConfetti();
+    startFallingHearts();
 }
 
-// Confetti
-function launchConfetti() {
-    for (let i = 0; i < 150; i++) {
-        const confetti = document.createElement("div");
-        confetti.style.position = "fixed";
-        confetti.style.width = "8px";
-        confetti.style.height = "8px";
-        confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
-        confetti.style.top = Math.random() * window.innerHeight + "px";
-        confetti.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 2000);
-    }
+// Falling hearts
+function startFallingHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.innerHTML = "❤️";
+        heart.className = "falling-heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+    }, 300);
 }
 
 // NO button runs
