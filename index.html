@@ -8,7 +8,6 @@
 <style>
 body {
     margin: 0;
-    padding: 0;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
     color: white;
@@ -28,19 +27,6 @@ body {
     padding: 50px 20px;
 }
 
-h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    text-shadow: 0 0 15px white;
-}
-
-#message {
-    font-size: 18px;
-    min-height: 120px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
-
 button {
     padding: 12px 25px;
     font-size: 16px;
@@ -48,7 +34,6 @@ button {
     border-radius: 30px;
     margin: 10px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 #yesBtn {
@@ -56,15 +41,35 @@ button {
     color: #ff4d6d;
 }
 
-#yesBtn:hover {
-    background: #ff4d6d;
-    color: white;
-}
-
 #noBtn {
     background: #222;
     color: white;
-    position: relative;
+}
+
+/* Overlay screen */
+.overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle, #ff4d6d, #ff758c);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    z-index:999;
+}
+
+.glow {
+    font-size:40px;
+    animation: glowText 1.5s infinite alternate;
+}
+
+@keyframes glowText {
+    from { text-shadow:0 0 10px white; }
+    to { text-shadow:0 0 30px yellow; }
 }
 
 /* Floating hearts */
@@ -86,34 +91,16 @@ button {
 
 <div class="container">
     <h1>Happy Valentine's Day Pooja ❤️</h1>
-    <div id="message"></div>
-    <div>
-        <button id="yesBtn" onclick="sayYes()">YES 💕</button>
-        <button id="noBtn">NO 😜</button>
-    </div>
+    <p>Will you always be mine?</p>
+    <button id="yesBtn" onclick="sayYes()">YES 💕</button>
+    <button id="noBtn">NO 😜</button>
 </div>
 
-<!-- Background Music -->
 <audio id="bgMusic" loop>
     <source src="romantic.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-
-// Typing message
-const text = "Pooja ❤️,\n\nThank you for being with me always.\nYou are my happiness, my strength,\nand my forever.\n\nWill you always be mine?";
-let i = 0;
-const speed = 40;
-
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("message").innerHTML += 
-            text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-    }
-}
-typeWriter();
 
 // Floating hearts
 function createHeart() {
@@ -127,67 +114,35 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-// YES button action
+// YES button
 function sayYes() {
 
-    // Play music
     const music = document.getElementById("bgMusic");
-    music.play().catch(err => console.log("Playback blocked:", err));
+    music.play();
 
-    // Alert popup
-    alert("Pooja ❤️\n\nThank you for being with me always.\nI need you always and forever.\nDon’t ever go to anyone else.\nBe my hendthi always 💍\nBe mine ❤️");
+    alert("You made me the happiest man alive ❤️");
 
-    // Change screen
-    document.body.innerHTML = `
-        <div style="
-            height:100vh;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            background: radial-gradient(circle, #ff4d6d, #ff758c);
-            color:white;
-            text-align:center;
-            padding:20px;
-        ">
-            <h1 style="
-                font-size:42px;
-                animation: glowText 1.5s infinite alternate;
-            ">
-                I LOVE YOU POOJA ❤️
-            </h1>
-
-            <p style="font-size:20px; margin-top:20px;">
-                Thank you for being with me always.
-            </p>
-
-            <p style="font-size:18px; margin-top:10px;">
-                I need you always and forever.
-            </p>
-
-            <p style="font-size:20px; margin-top:15px; font-weight:bold;">
-                Be my hendthi always 💍
-            </p>
-
-            <p style="font-size:22px; margin-top:15px;">
-                Be mine. Forever. ❤️
-            </p>
-        </div>
-
-        <style>
-        @keyframes glowText {
-            from { text-shadow:0 0 10px white; }
-            to { text-shadow:0 0 30px yellow; }
-        }
-        </style>
+    const overlay = document.createElement("div");
+    overlay.className = "overlay";
+    overlay.innerHTML = `
+        <h1 class="glow">I LOVE YOU POOJA ❤️</h1>
+        <p style="font-size:20px; margin-top:20px;">
+            Thank you for being with me always.
+        </p>
+        <p>I need you always and forever.</p>
+        <p>Be my hendthi always 💍</p>
+        <p style="font-size:22px; margin-top:15px;">
+            Be mine. Forever. ❤️
+        </p>
     `;
+    document.body.appendChild(overlay);
 
     launchConfetti();
 }
 
 // Confetti
 function launchConfetti() {
-    for (let i = 0; i < 180; i++) {
+    for (let i = 0; i < 150; i++) {
         const confetti = document.createElement("div");
         confetti.style.position = "fixed";
         confetti.style.width = "8px";
@@ -196,33 +151,13 @@ function launchConfetti() {
         confetti.style.top = Math.random() * window.innerHeight + "px";
         confetti.style.left = Math.random() * window.innerWidth + "px";
         confetti.style.opacity = 0.8;
-        confetti.style.transition = "transform 2s ease, opacity 2s ease";
         document.body.appendChild(confetti);
-
-        setTimeout(() => {
-            confetti.style.transform = "scale(3)";
-            confetti.style.opacity = "0";
-        }, 50);
-
         setTimeout(() => confetti.remove(), 2000);
     }
 }
 
 // NO button runs
 const noBtn = document.getElementById("noBtn");
-
 function moveNoButton() {
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-    noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-}
-
-noBtn.addEventListener("mouseover", moveNoButton);
-noBtn.addEventListener("click", moveNoButton);
-
-</script>
-
-</body>
-</html>
