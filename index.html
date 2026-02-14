@@ -24,7 +24,12 @@ body {
 }
 
 .container {
-    padding: 50px 20px;
+    padding: 60px 20px;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
 }
 
 button {
@@ -46,6 +51,19 @@ button {
     color: white;
 }
 
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+}
+
 /* Overlay screen */
 .overlay {
     position: fixed;
@@ -60,29 +78,17 @@ button {
     align-items:center;
     text-align:center;
     z-index:999;
+    padding:20px;
 }
 
 .glow {
-    font-size:40px;
+    font-size:42px;
     animation: glowText 1.5s infinite alternate;
 }
 
 @keyframes glowText {
     from { text-shadow:0 0 10px white; }
     to { text-shadow:0 0 30px yellow; }
-}
-
-/* Floating hearts */
-.heart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 20px;
-    animation: floatUp 6s linear infinite;
-}
-
-@keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-110vh); opacity: 0; }
 }
 </style>
 </head>
@@ -96,7 +102,8 @@ button {
     <button id="noBtn">NO 😜</button>
 </div>
 
-<audio id="bgMusic" loop>
+<!-- Background Music -->
+<audio id="bgMusic" preload="auto">
     <source src="romantic.mp3" type="audio/mpeg">
 </audio>
 
@@ -114,11 +121,18 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-// YES button
+// YES button action
 function sayYes() {
 
     const music = document.getElementById("bgMusic");
-    music.play();
+    music.currentTime = 0;
+    music.volume = 1;
+
+    music.play().then(() => {
+        console.log("Music started");
+    }).catch(err => {
+        console.log("Playback blocked:", err);
+    });
 
     alert("You made me the happiest man alive ❤️");
 
@@ -130,7 +144,10 @@ function sayYes() {
             Thank you for being with me always.
         </p>
         <p>I need you always and forever.</p>
-        <p>Be my hendthi always 💍</p>
+        <p>Don’t ever go to anyone else.</p>
+        <p style="font-size:20px; margin-top:10px; font-weight:bold;">
+            Be my hendthi always 💍
+        </p>
         <p style="font-size:22px; margin-top:15px;">
             Be mine. Forever. ❤️
         </p>
@@ -150,7 +167,6 @@ function launchConfetti() {
         confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
         confetti.style.top = Math.random() * window.innerHeight + "px";
         confetti.style.left = Math.random() * window.innerWidth + "px";
-        confetti.style.opacity = 0.8;
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 2000);
     }
@@ -158,6 +174,19 @@ function launchConfetti() {
 
 // NO button runs
 const noBtn = document.getElementById("noBtn");
+
 function moveNoButton() {
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
+</script>
+
+</body>
+</html>
